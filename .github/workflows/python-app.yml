@@ -1,0 +1,43 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the code from your repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Node.js environment
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: make install
+
+    # Step 4: Run the web application (with sleep to allow the server to start)
+    - name: Run the app
+      run: |
+        make run &
+        sleep 8  # Wait for 8 seconds to let the server start
+
+    # Optional: You can add test steps here if needed
+    # For example, you can add a curl command to test if the server is running:
+    - name: Check if the server is running
+      run: curl -I http://localhost:3000
+
+    # Step 5: Clean up (optional)
+    - name: Stop the app
+      run: killall npm
