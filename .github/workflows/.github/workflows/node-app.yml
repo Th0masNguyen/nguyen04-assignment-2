@@ -37,7 +37,3 @@ jobs:
     # For example, you can add a curl command to test if the server is running:
     - name: Check if the server is running
       run: curl -I http://localhost:3000
-
-    # Step 5: Clean up (optional)
-    - name: Stop the app
-      run: killall npm
